@@ -18,7 +18,8 @@ be unable to attend work today due to unexpected
 vehicle trouble. I apologize for the inconvenience
 and plan to return to the office tomorrow.
 
-Sincerely, [Your Name]
+Sincerely,
+[Your Name]
 ```
 
 **Use Case:** Corporate settings

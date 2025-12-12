@@ -1,6 +1,7 @@
 from langchain_ollama import ChatOllama
-from langchain.messages import HumanMessage, SystemMessage
+from langchain_core.messages import HumanMessage, SystemMessage
 from IPython.display import display, Markdown
+from langchain_core.prompts import PromptTemplate, ChatPromptTemplate
 
 # Initialiizing a model
 model = ChatOllama(model="gemma3:1b")
