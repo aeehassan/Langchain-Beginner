@@ -10,7 +10,6 @@ from langchain_ollama import ChatOllama
 from langchain_core.tools import tool
 from pydantic import BaseModel, Field, ValidationError
 from langchain.messages import HumanMessage, SystemMessage
-from langchain_core.prompts import PromptTemplate
 
 # Problem 1: Memory management by ollama
 # Ollama creates a model instance for "model_with_structure",
