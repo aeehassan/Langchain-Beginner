@@ -30,14 +30,17 @@ from langchain_core.prompts import PromptTemplate
 # weights are the exact size of the model. The strategy is to reduce
 # that memory size to avoid crash. Parameter name is num_ctx.
 # - It's not recommended to combine tool calling and structured output on
-# the same model. Itmakes the llm confused
+# the same model. It makes the llm confused
+# - Temperature=0: This makes the model deterministic. It always returns
+# the same output for the same input. And Temperature>0 makes the model
+# non-deterministic - more creative and random in its responses.
 #
 # Fix 2:
 # Use one model instance for both structured output and tool calling
 # It leads to a more efficient resource management.
 #
 
-model = ChatOllama(model="llama3.2:3b", temperature=1, keep_alive=0)
+model = ChatOllama(model="llama3.2:3b", temperature=0, keep_alive=0)
 
 messages = [
     SystemMessage("""You are an order validation assistant for a fabric business.
