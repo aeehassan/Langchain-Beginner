@@ -103,8 +103,8 @@ while True:
         get_order_request = get_order_request.tool_calls[0]
 
         try:
-            response = get_order.invoke(get_order_request)
-            print(f"Agent: {response.content}")
+            response = get_order.invoke(get_order_request["args"])
+            print(f"Agent: {response}")
         except ValidationError as e:
             errors = e.errors()
             fields = []
