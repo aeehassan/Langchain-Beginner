@@ -55,6 +55,8 @@ agent = create_agent(
     system_prompt="Call the tool for every user message. Dont respond at all. There's a print statement to handle response",
 )
 
+state = {}
+
 for i in range(0, 5):
     state = agent.invoke(
         {
