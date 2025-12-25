@@ -1,7 +1,12 @@
 from langchain.agents import create_agent
 from langchain_ollama import ChatOllama
-from langchain.messages import HumanMessage
-from langchain.agents.middleware import wrap_model_call, ModelRequest, ModelResponse
+from langchain.messages import HumanMessage, ToolMessage
+from langchain.agents.middleware import (
+    wrap_model_call,
+    ModelRequest,
+    ModelResponse,
+    wrap_tool_call,
+)
 from langchain.tools import tool
 
 # Static agent
@@ -40,7 +45,7 @@ def dynamic_model_selection(request: ModelRequest, handler) -> ModelResponse:
 
 
 agent_two = create_agent(model_two, tools=[], middleware=[dynamic_model_selection])
-response = model_two.invoke(
+response = agent_two.invoke(
     {
         "messages": [
             HumanMessage("I am a nigerian. Tell me about my country in 20 words")
@@ -76,4 +81,34 @@ agent_three = create_agent(
     middleware=[dynamic_model_selection],
 )
 
+
 # Tool error handling
+@tool
+def throw_value_error() -> bool:
+    """Throw an exception on user request"""
+    raise ValueError("Ikr :)")
+
+
+@wrap_tool_call
+def handle_tool_errors(request, handler):
+    """Handle tool execution errors with custom messages."""
+    try:
+        return handler(request)
+    except Exception as e:
+        # Return a custom error message to the model
+        msg = ToolMessage(
+            content=f"Tool error: Please check your input and try again. ({str(e)})",
+            tool_call_id=request.tool_call["id"],
+        )
+        print(msg)
+        return msg
+
+
+agent = create_agent(
+    model=model_two, tools=[throw_value_error], middleware=[handle_tool_errors]
+)
+response = agent.invoke({"messages": [HumanMessage("Throw an exception error")]})
+print(response)
+
+for msg in response["messages"]:
+    print(f"{msg.content} \n")
