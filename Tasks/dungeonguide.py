@@ -30,7 +30,8 @@ memory = [
                     Ensure that your responses are brief, concise and straightforward.
                     They should be at most 25 words no matter what.
                     Also, remember that the ranks in order of priority are either S, A
-                    , B, C, D or E.
+                    , B, C, D or E. Also, hunters cannot exit the dungeon unless they 
+                    have cleared it.
                    """,
     },
 ]
